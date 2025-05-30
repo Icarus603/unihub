@@ -1,0 +1,24 @@
+[project]
+name = "unihub-backend"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Icarus603",email = "zhehongl91@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "django",
+    "djangorestframework",
+    "psycopg2-binary",
+    "djangorestframework-simplejwt",
+    "python-decouple",
+    "pillow",
+    "django-cors-headers",
+    "drf-spectacular"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
