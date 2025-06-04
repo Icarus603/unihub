@@ -34,9 +34,9 @@ urlpatterns = [
     # JWT Token Endpoints
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    # App URLs (to be created later)
-    # path('api/v1/users/', include('users.urls')),
-    # path('api/v1/resources/', include('resources.urls')),
+    # App URLs
+    path('api/v1/users/', include('users.urls')),
+    path('api/v1/resources/', include('resources.urls')),
 ]
 
 # Serve media files during development

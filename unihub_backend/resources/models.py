@@ -120,3 +120,18 @@ class Attachment(models.Model):
     #         self.filename = self.file.name.split('/')[-1]
     #     # Logic to determine file_type can be added here based on file extension
     #     super().save(*args, **kwargs)
+
+class Comment(models.Model):
+    resource = models.ForeignKey(Resource, related_name='comments', on_delete=models.CASCADE, verbose_name="資源")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="用戶")
+    content = models.TextField(verbose_name="內容")
+    parent_comment = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE, verbose_name="父評論")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="建立時間")
+
+    class Meta:
+        verbose_name = "評論"
+        verbose_name_plural = "評論"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user} - {self.content[:20]}"
