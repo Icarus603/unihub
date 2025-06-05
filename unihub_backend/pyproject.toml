@@ -15,7 +15,8 @@ dependencies = [
     "python-decouple",
     "pillow",
     "django-cors-headers",
-    "drf-spectacular"
+    "drf-spectacular",
+    "django-filter"
 ]
 
 

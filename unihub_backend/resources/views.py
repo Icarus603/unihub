@@ -21,6 +21,10 @@ class ResourceViewSet(viewsets.ModelViewSet):
     queryset = Resource.objects.all()
     serializer_class = ResourceSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filterset_fields = ['category', 'tags', 'uploader', 'status']
+    search_fields = ['title', 'description']
+    ordering_fields = ['upload_date', 'view_count', 'download_count']
+    ordering = ['-upload_date']
 
     def perform_create(self, serializer):
         serializer.save(uploader=self.request.user)
