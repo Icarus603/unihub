@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Category, Tag, Resource, Attachment
+from .models import Rating
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,3 +29,9 @@ class ResourceSerializer(serializers.ModelSerializer):
             'download_count', 'attachments'
         ]
         read_only_fields = ['uploader', 'view_count', 'download_count']
+
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ['id', 'resource', 'user', 'score', 'created_at']
+        read_only_fields = ['user', 'created_at']

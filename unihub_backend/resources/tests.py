@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 
-from .models import Category, Resource
+from .models import Category, Resource, Rating
 
 
 class ResourceAPITestCase(APITestCase):
@@ -48,3 +48,19 @@ class ResourceAPITestCase(APITestCase):
         response = self.client.get(url, {"ordering": "-view_count"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data[0]["id"], self.resource1.id)
+
+    def test_create_rating(self):
+        url = reverse("rating-list")
+        self.client.force_authenticate(user=self.user)
+        data = {"resource": self.resource1.id, "score": 4}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(Rating.objects.count(), 1)
+        self.assertEqual(Rating.objects.first().score, 4)
+
+    def test_rating_requires_authentication(self):
+        url = reverse("rating-list")
+        data = {"resource": self.resource1.id, "score": 5}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 401)
+

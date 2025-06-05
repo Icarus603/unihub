@@ -1,10 +1,11 @@
 from rest_framework import viewsets, permissions
-from .models import Category, Tag, Resource, Attachment
+from .models import Category, Tag, Resource, Attachment, Rating
 from .serializers import (
     CategorySerializer,
     TagSerializer,
     ResourceSerializer,
     AttachmentSerializer,
+    RatingSerializer,
 )
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -33,3 +34,11 @@ class AttachmentViewSet(viewsets.ModelViewSet):
     queryset = Attachment.objects.all()
     serializer_class = AttachmentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class RatingViewSet(viewsets.ModelViewSet):
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
