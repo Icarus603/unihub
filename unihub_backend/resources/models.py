@@ -114,6 +114,21 @@ class Attachment(models.Model):
     def __str__(self):
         return f"{self.resource.title} - {self.file.name.split('/')[-1]}"
 
+class Rating(models.Model):
+    resource = models.ForeignKey(Resource, related_name='ratings', on_delete=models.CASCADE, verbose_name="資源")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='ratings', on_delete=models.CASCADE, verbose_name="用戶")
+    score = models.PositiveSmallIntegerField(default=1, verbose_name="評分")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="創建時間")
+
+    class Meta:
+        verbose_name = "評分"
+        verbose_name_plural = "評分"
+        unique_together = ('resource', 'user')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} -> {self.resource.title}: {self.score}"
+
     # Potentially add a method to automatically set filename and file_type on save
     # def save(self, *args, **kwargs):
     #     if not self.filename and self.file:
