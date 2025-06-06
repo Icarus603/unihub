@@ -22,18 +22,12 @@
 </head>
   <body class="bg-gray-100">
     <div id="root"></div>
-    <script>
-      // Initialize process.env.API_KEY for the purpose of this example.
-      // In a real application, this would be set through environment variables
-      // by the build system or server. It SHOULD NOT be hardcoded in production.
+    <script type="module">
+      // Expose the Gemini API key provided via Vite's environment injection.
       if (typeof process === 'undefined') {
         window.process = { env: {} };
       }
-      // IMPORTANT: Replace "YOUR_GEMINI_API_KEY" with an actual API key if you intend to run this.
-      // For this generated code, we are providing a placeholder.
-      // The instructions state to assume process.env.API_KEY is pre-configured.
-      // If it's not set, the Gemini API calls will fail.
-      process.env.API_KEY = "YOUR_GEMINI_API_KEY"; // Placeholder
+      process.env.API_KEY = import.meta.env.GEMINI_API_KEY;
     </script>
     <script type="module" src="/index.tsx"></script>
   </body>
