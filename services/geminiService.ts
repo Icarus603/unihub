@@ -2,10 +2,10 @@
 import { GoogleGenAI, GenerateContentResponse, GroundingMetadata } from "@google/genai";
 import { GEMINI_MODEL_TEXT } from '../constants';
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = import.meta.env.GEMINI_API_KEY;
 
 if (!API_KEY) {
-  console.error("Gemini API key is missing. Please set the process.env.API_KEY environment variable.");
+  console.error("Gemini API key is missing. Please set GEMINI_API_KEY in your .env.local file.");
 }
 
 const ai = new GoogleGenAI({ apiKey: API_KEY || "MISSING_API_KEY" });
