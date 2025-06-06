@@ -64,35 +64,4 @@ class ResourceAPITestCase(APITestCase):
         data = {"resource": self.resource1.id, "score": 5}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 401)
-
-
-from .models import Category, Resource
-
-
-class ResourceAPITestCase(APITestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(username="tester", password="pass")
-        self.category1 = Category.objects.create(name="Cat1")
-        self.category2 = Category.objects.create(name="Cat2")
-        self.resource1 = Resource.objects.create(
-            title="Res1",
-            description="Desc1",
-            uploader=self.user,
-            category=self.category1,
-            status="approved",
-        )
-        self.resource2 = Resource.objects.create(
-            title="Res2",
-            description="Desc2",
-            uploader=self.user,
-            category=self.category2,
-            status="approved",
-        )
-
-    def test_filter_by_category(self):
-        url = reverse("resource-list")
-        response = self.client.get(url, {"category": self.category1.id})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["id"], self.resource1.id)
         
